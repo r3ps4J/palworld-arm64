@@ -2,8 +2,6 @@
 
 Runs SteamCMD and Palworld with [FEX](https://github.com/FEX-Emu/FEX) (Only tested on Oracle Cloud free tier)
 
-[Docker Hub](https://hub.docker.com/r/nitrog0d/palworld-arm64)
-
 ## Getting started
 
 1. Make a docker-compose.yml file in a folder of your choice
@@ -17,7 +15,7 @@ Runs SteamCMD and Palworld with [FEX](https://github.com/FEX-Emu/FEX) (Only test
 version: '3.9'
 services:
   palworld-server:
-    image: 'nitrog0d/palworld-arm64:latest'
+    image: 'ghcr.io/r3ps4j/palworld-arm64:latest'
     container_name: 'palworld-server'
     ports:
       - '8211:8211/udp'
