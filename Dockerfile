@@ -34,7 +34,9 @@ RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.t
 COPY --chmod=755 ./init-server.sh /home/steam/init-server.sh
 
 # Set up some default environment variables
-ENV ALWAYS_UPDATE_ON_START=true \
+ENV PUID=1000 \
+    PGID=1000 \
+    ALWAYS_UPDATE_ON_START=true \
     MULTITHREAD_ENABLED=true \
     COMMUNITY_SERVER=false
 
