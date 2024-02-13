@@ -1,6 +1,16 @@
 #!/bin/bash
 # Based on server manager from https://github.com/jammsen/docker-palworld-dedicated-server
 
+# Setting UID and GID based on https://github.com/thijsvanloef/palworld-server-docker/blob/main/scripts/init.sh
+if [[ ! "${PUID}" -eq 0 ]] && [[ ! "${PGID}" -eq 0 ]]; then
+    printf "\e[0;32m*****EXECUTING USERMOD*****\e[0m\n"
+    usermod -o -u "${PUID}" steam
+    groupmod -o -g "${PGID}" steam
+else
+    printf "\033[31m%s\n" "Running as root is not supported, please fix your PUID and PGID!"
+    exit 1
+fi
+
 function installServer() {
   FEXBash './steamcmd.sh +force_install_dir "/palworld" +login anonymous +app_update 2394010 validate +quit'
 }
@@ -10,7 +20,7 @@ function main() {
   
   # Check if we have proper read/write permissions to /palworld
   if [ ! -r "/palworld" ] || [ ! -w "/palworld" ]; then
-      echo 'ERROR: I do not have read/write permissions to /palworld! Please run "chown -R 1000:1000 palworld/" on host machine, then try again.'
+      echo "ERROR: I do not have read/write permissions to /palworld! Please check you've set your PUID and PGID environment variables correctly. If so, please run \"chown -R ${PUID}:${PGID} palworld/\" on the host machine and try again."
       exit 1
   fi
 

@@ -7,7 +7,7 @@ Runs SteamCMD and Palworld with [FEX](https://github.com/FEX-Emu/FEX) (Only test
 ## Getting started
 
 1. Make a docker-compose.yml file in a folder of your choice
-2. Create `palworld` sub-directory on the folder and run `chmod 777 palworld` for full permissions or use `chown -R 1000:1000 palworld/`.
+2. Create `palworld` sub-directory on the folder and ensure the right permissions are set (see PUID and PGID environment variables).
 3. Start via `docker compose up -d` (Starts detached, you can use `docker compose down` to stop it)
 4. After first start, stop the server, setup your config at `palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini` and start it again
 5. The default port for your server is 8211 (UDP)
@@ -22,6 +22,8 @@ services:
     ports:
       - '8211:8211/udp'
     environment:
+      - PUID=1000
+      - PGID=1000
       - ALWAYS_UPDATE_ON_START=true
       - MULTITHREAD_ENABLED=true
       - COMMUNITY_SERVER=false
